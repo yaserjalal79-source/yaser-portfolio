@@ -1,0 +1,1271 @@
+/* ---------- Tokens (palette pulled from the Figma mood board) ---------- */
+:root {
+  --paper: #f4f1ea;
+  --ink: #121212;
+  --muted: #6b6a66;
+  --violet: #6b5cff;
+  --pink: #ff8ad8;
+  --yellow: #f5e663;
+  --sky: #9ad0ff;
+  --radius: 22px;
+  --display: "Fraunces", "Georgia", serif;
+  --sans: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root:not([data-theme="light"]) {
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e0e10;
+    --ink: #f4f1ea;
+    --muted: #a09e98;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #0e0e10;
+  --ink: #f4f1ea;
+  --muted: #a09e98;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+main {
+  overflow-x: clip;
+  position: relative;
+  z-index: 1;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+}
+
+em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+section {
+  padding: 8rem 1.5rem;
+  position: relative;
+}
+
+/* ---------- Custom cursor & grain ---------- */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  pointer-events: none;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: width 0.3s var(--ease), height 0.3s var(--ease);
+}
+
+.cursor.active {
+  width: 64px;
+  height: 64px;
+}
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.06;
+  background-image: radial-gradient(#000 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+@media (hover: none) {
+  body {
+    cursor: auto;
+  }
+  .cursor {
+    display: none;
+  }
+}
+
+/* ---------- Progress bar ---------- */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 45;
+  background: linear-gradient(90deg, var(--violet), var(--pink), var(--yellow));
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ---------- Nav ---------- */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
+  transition: transform 0.5s var(--ease), background 0.3s;
+}
+
+.nav.hidden {
+  transform: translateY(-110%);
+}
+
+.logo {
+  color: var(--violet);
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.logo span {
+  color: inherit;
+}
+
+/* Hovering the logo swaps the letters for the animated GIF. */
+.logo-gif {
+  display: none;
+  height: 4.8rem;
+  margin: -1.2rem 0;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+.logo:hover .logo-text {
+  display: none;
+}
+
+.logo:hover .logo-gif {
+  display: block;
+}
+
+.nav nav {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.nav nav a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.nav nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: var(--pink);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+
+.nav nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: none;
+}
+
+.theme-toggle .dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--yellow);
+  transition: transform 0.5s var(--ease);
+}
+
+:root[data-theme="dark"] .theme-toggle .dot {
+  transform: scale(0.5);
+  background: var(--violet);
+}
+
+/* Hamburger menu: only on small screens. */
+.menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  place-items: center;
+  align-content: center;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 2px 0;
+  background: var(--ink);
+  transition: transform 0.3s var(--ease), opacity 0.3s;
+}
+
+.nav.open .menu-toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav.open .menu-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav.open .menu-toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 720px) {
+  .menu-toggle {
+    display: grid;
+  }
+
+  .nav nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 1.5rem 1rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav nav a {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 1.05rem;
+  }
+
+  .nav.open nav {
+    display: flex;
+  }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 7rem;
+  overflow: hidden;
+}
+
+.eyebrow {
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+
+.hero-title {
+  font-size: clamp(3.5rem, 12vw, 11rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.hero-title .line {
+  display: block;
+  animation: rise 1s var(--ease) both;
+}
+
+.hero-title .line:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.hero-title em {
+  color: var(--violet);
+  transition: color 0.4s;
+}
+
+.hero-title em:hover {
+  color: var(--pink);
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(105%) rotate(4deg);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.hero-sub {
+  max-width: 34ch;
+  color: var(--muted);
+  margin-top: 2rem;
+  font-size: 1.15rem;
+}
+
+.stickers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.sticker {
+  position: absolute;
+  pointer-events: auto;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  background: var(--c);
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.35);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transition: transform 0.4s var(--ease);
+  animation: bob 6s ease-in-out infinite;
+}
+
+.sticker:hover {
+  transform: rotate(-4deg) scale(1.06);
+}
+
+.sticker.dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.s-blob {
+  top: 16%;
+  right: 8%;
+  border-radius: 46% 54% 62% 38% / 44% 40% 60% 56%;
+  padding: 2.2rem 2rem;
+  font-family: var(--display);
+  font-size: 1.3rem;
+  font-style: italic;
+}
+
+.s-tag {
+  top: 60%;
+  right: 18%;
+  transform: rotate(-3deg);
+}
+
+.s-tag.alt {
+  top: 72%;
+  right: 6%;
+  transform: rotate(4deg);
+  animation-delay: -2s;
+}
+
+.s-star {
+  top: 38%;
+  right: 30%;
+  animation-delay: -4s;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: -14px;
+  }
+}
+
+.scroll-hint {
+  margin-top: 3rem;
+  align-self: flex-start;
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 2px;
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.2rem 0;
+  transform: rotate(-2deg);
+  margin: 2rem -2rem;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: slide 28s linear infinite;
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-style: italic;
+}
+
+.marquee-track i {
+  color: var(--yellow);
+  font-style: normal;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Section headers ---------- */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+
+.section-head h2 {
+  font-size: clamp(2.6rem, 7vw, 5.5rem);
+  letter-spacing: -0.02em;
+}
+
+.section-head p {
+  color: var(--muted);
+  margin: 0;
+  max-width: 30ch;
+}
+
+/* ---------- Work cards ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: box-shadow 0.4s var(--ease);
+  will-change: transform;
+}
+
+.card:hover {
+  box-shadow: 10px 12px 0 var(--violet);
+}
+
+.card-visual {
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: radial-gradient(circle at 30% 30%, var(--a), var(--b) 70%);
+  overflow: hidden;
+}
+
+.card-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate3d(0, var(--drift, 0px), 0) scale(1.12);
+  transition: transform 0.6s var(--ease);
+}
+
+.card:hover .card-visual img {
+  transform: translate3d(0, var(--drift, 0px), 0) scale(1.2);
+}
+
+/* Pictures shown whole (fit), with their own background color */
+.card-visual img.fit {
+  object-fit: contain;
+  transform: translate3d(0, var(--drift, 0px), 0);
+}
+
+.card:hover .card-visual img.fit {
+  transform: translate3d(0, var(--drift, 0px), 0) scale(1.04);
+}
+
+.card-num {
+  position: absolute;
+  left: 1rem;
+  bottom: 0.6rem;
+  font-family: var(--display);
+  font-size: 4.5rem;
+  font-style: italic;
+  color: var(--ink);
+  transform: translateZ(40px);
+}
+
+.card-body {
+  flex: 1;
+  padding: 1.4rem 1.5rem 1.6rem;
+}
+
+.card-body h3 {
+  font-size: 1.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-body p {
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+}
+
+/* ---------- Lab: interactive gradient wave ---------- */
+.lab {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.lab .section-head p {
+  color: color-mix(in srgb, var(--paper) 65%, transparent);
+}
+
+.lab-stage {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: min(70vh, 640px);
+  background: #000;
+}
+
+#labCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+.lab-label {
+  position: absolute;
+  left: 1.2rem;
+  bottom: 1rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+
+/* ---------- About ---------- */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.polaroid-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.polaroid {
+  margin: 0;
+  background: #fff;
+  padding: 14px 14px 56px;
+  box-shadow: 0 25px 50px -20px rgba(0, 0, 0, 0.4);
+  transform: rotate(-4deg);
+  transition: transform 0.6s var(--ease);
+  max-width: 340px;
+  width: 100%;
+}
+
+.polaroid:hover {
+  transform: rotate(2deg) scale(1.03);
+}
+
+/* Your photo (3:4) fills the polaroid frame exactly. */
+.photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.polaroid figcaption {
+  font-family: var(--display);
+  font-style: italic;
+  color: #222;
+  text-align: center;
+  margin-top: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.about-copy h2 {
+  font-size: clamp(2.6rem, 6vw, 4.5rem);
+  margin-bottom: 1.5rem;
+}
+
+.lead {
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  line-height: 1.35;
+}
+
+.skills {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 2rem 0 0;
+}
+
+.skills li {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--yellow);
+  color: #111;
+  font-weight: 500;
+  transition: transform 0.3s var(--ease);
+}
+
+.skills li:hover {
+  transform: translateY(-4px) rotate(-3deg);
+}
+
+/* FLOWSPACE picture is 16:9, so the frame matches it and the whole picture shows. */
+.card-visual.wide-shot {
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+/* ---------- Clients (worked with) ---------- */
+.clients-title {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  margin: 2.5rem 0 1rem;
+}
+
+.clients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.client {
+  margin: 0;
+  width: 150px;
+  text-align: center;
+}
+
+.client {
+  animation: client-float 4s ease-in-out infinite;
+  cursor: pointer;
+}
+
+.client:nth-child(2) {
+  animation-delay: -2s;
+}
+
+.client img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 22px;
+  transition: transform 0.4s var(--ease);
+}
+
+.client:hover img {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+@keyframes client-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+.motion-off .client {
+  animation: none;
+}
+
+.client figcaption {
+  margin-top: 0.6rem;
+  font-family: var(--display);
+  font-size: 1.05rem;
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  background: #442561;
+  color: #f4f1ea;
+  text-align: center;
+  padding-bottom: 4rem;
+}
+
+.contact-title {
+  font-size: clamp(3rem, 10vw, 8rem);
+  letter-spacing: -0.03em;
+}
+
+.contact-title em {
+  color: var(--pink);
+}
+
+.mail {
+  display: inline-block;
+  margin: 2.5rem 0 1.5rem;
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
+  text-decoration: none;
+  border-bottom: 3px solid #f4f1ea;
+  transition: transform 0.3s var(--ease);
+}
+
+.socials {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.socials a {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid #f4f1ea;
+  border-radius: 999px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.socials a:hover {
+  background: #f4f1ea;
+  color: #442561;
+}
+
+.fine {
+  margin-top: 4rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* ---------- Reveal on scroll (translate is separate from tilt's transform) ---------- */
+.reveal {
+  opacity: 0;
+  translate: 0 40px;
+  filter: blur(6px);
+  transition: opacity 0.9s var(--ease), translate 0.9s var(--ease), filter 0.9s var(--ease);
+}
+
+.reveal.in {
+  opacity: 1;
+  translate: none;
+  filter: none;
+}
+
+/* ---------- Intro: cinematic energy ring ---------- */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #07040f;
+  cursor: pointer;
+  transition: opacity 0.9s var(--ease), visibility 0.9s;
+}
+
+.intro.done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.intro-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.intro-title span {
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 7vw, 5.5rem);
+  letter-spacing: 0.32em;
+  margin-right: -0.32em;
+  color: #eaf4ff;
+  animation: intro-pulse 2.6s ease-in-out infinite alternate;
+}
+
+.intro-sound {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid #5fb8ff;
+  border-radius: 999px;
+  background: transparent;
+  color: #9fd8ff;
+  font: 14px "Segoe UI", system-ui, sans-serif;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+@keyframes intro-pulse {
+  from {
+    text-shadow: 0 0 10px #6fb6ff, 0 0 30px #2f6bff;
+  }
+  to {
+    text-shadow: 0 0 22px #9fd0ff, 0 0 60px #3d7bff;
+  }
+}
+
+/* The hero waits for the intro to finish. */
+.intro-on .hero-title .line,
+.intro-on .sticker {
+  animation-play-state: paused;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Background wave lines (behind the page) ---------- */
+.wave-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.motion-off .wave-bg {
+  display: none;
+}
+
+/* ---------- Floating toggles (bottom corners) ---------- */
+.motion-toggle {
+  position: fixed;
+  bottom: 1.25rem;
+  z-index: 60;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: none;
+}
+
+.motion-toggle {
+  right: 1.25rem;
+}
+
+.ocean-toggle {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 60;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: none;
+}
+
+.ocean-toggle[aria-pressed="true"] {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+/* Motion off (set by the Motion button): stop animations and transitions. */
+.motion-off *,
+.motion-off *::before,
+.motion-off *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+html.motion-off {
+  scroll-behavior: auto;
+}
+
+/* ---------- First-visit tour card ---------- */
+.onboard {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 4.5rem;
+  z-index: 65;
+  width: min(260px, calc(100vw - 2.5rem));
+  padding: 0.85rem 1rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 12px 30px -16px rgba(0, 0, 0, 0.45);
+  opacity: 0.97;
+}
+
+.onboard[hidden] {
+  display: none;
+}
+
+.onboard-step {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--violet);
+}
+
+.onboard-title {
+  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+}
+
+.onboard-text {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.onboard-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.onboard-skip,
+.onboard-next {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.onboard-skip {
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+
+.onboard-next {
+  border: none;
+  background: var(--violet);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ---------- Project details panel ---------- */
+.project-dialog {
+  border: none;
+  padding: 0;
+  width: min(680px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+}
+
+/* The page hides the normal cursor, so bring it back inside the panel. */
+.project-dialog,
+.project-dialog * {
+  cursor: auto;
+}
+
+.project-dialog button,
+.project-dialog a {
+  cursor: pointer;
+}
+
+.project-dialog::backdrop {
+  background: rgba(7, 4, 15, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+.project-dialog[open] {
+  animation: pd-in 0.5s var(--ease) both;
+}
+
+@keyframes pd-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pd-inner {
+  padding: 1.5rem;
+  position: relative;
+}
+
+.pd-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pd-image {
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+
+.pd-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.pd-inner h3 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin: 0.5rem 0 0.8rem;
+}
+
+.pd-text {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin: 0 0 1.4rem;
+}
+
+.pd-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.8rem 1.2rem;
+  margin: 0 0 1.4rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.pd-facts dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--violet);
+}
+
+.pd-facts dd {
+  margin: 0.2rem 0 0;
+}
+
+.pd-label {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--violet);
+  margin: 1rem 0 0.4rem;
+}
+
+.pd-visit {
+  display: inline-block;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  background: var(--violet);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ---------- Blurred backdrop: the gaps around a "fit" picture show a blurred copy of the same picture ---------- */
+.blur-visual {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* In the detail panel the photo is in normal flow, so lift it above the blur. */
+.pd-image.blur-visual > img {
+  position: relative;
+  z-index: 1;
+}
+
+.blur-visual::before {
+  content: "";
+  position: absolute;
+  inset: -24px;
+  background: var(--src) center / cover no-repeat;
+  filter: blur(18px) brightness(0.75);
+  transform: scale(1.05);
+}
+
+/* ---------- Easter egg ---------- */
+/* Hard to spot: small, faint, and placed at a random spot (set in script.js).
+   It only brightens when the cursor is right on top of it. */
+.egg {
+  position: absolute;
+  width: 44px;
+  height: auto;
+  z-index: 2;
+  cursor: pointer;
+  opacity: 0.14;
+  image-rendering: pixelated;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+
+.egg:hover,
+.egg:focus-visible {
+  opacity: 1;
+  transform: scale(1.4) rotate(-4deg);
+}
+
+.egg-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 12px;
+  display: block;
+  margin-top: 1rem;
+  background: #000;
+  object-fit: contain;
+}
+
+/* The whole site turns dark when the egg is found. */
+:root.egg-dark,
+:root.egg-dark[data-theme="light"] {
+  --paper: #050409;
+  --ink: #f4f1ea;
+  --muted: #a09e98;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 860px) {
+  .about {
+    grid-template-columns: 1fr;
+  }
+  .sticker {
+    font-size: 0.85rem;
+  }
+  .s-blob {
+    top: auto;
+    bottom: 12%;
+    right: 4%;
+  }
+  .s-tag,
+  .s-tag.alt,
+  .s-star {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  section {
+    padding: 5rem 1rem;
+  }
+  .marquee {
+    margin: 2rem -1rem;
+  }
+}

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yaser Mohammed Shajalal — UI/UX Designer</title>
+  <meta name="description" content="Portfolio of Yaser Mohammed Shajalal, UI/UX designer: research, flows, design systems and Figma-ready handoff." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Orbitron:wght@500;700&family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=48" />
+</head>
+<body class="intro-on">
+  <canvas class="wave-bg" id="waveBg" aria-hidden="true"></canvas>
+  <div class="intro" id="intro" aria-hidden="true">
+    <canvas id="introCanvas"></canvas>
+    <div class="intro-title"><span>YASER</span></div>
+    <button class="intro-sound" type="button" aria-pressed="true">Sound on</button>
+  </div>
+  <audio id="introAudio" src="audio/intro.mp3" preload="auto"></audio>
+  <div class="progress" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#top" class="logo" data-magnetic>
+      <span class="logo-text">YS<span>.</span></span>
+      <img class="logo-gif" src="images/logo-hover.gif" alt="" />
+    </a>
+    <nav id="siteMenu">
+      <a href="#work" data-magnetic>Work</a>
+      <a href="#lab" data-magnetic>Lab</a>
+      <a href="#about" data-magnetic>About</a>
+      <a href="#contact" data-magnetic>Contact</a>
+    </nav>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteMenu">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" type="button" aria-label="Toggle theme" data-magnetic>
+      <span class="dot"></span>
+    </button>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <p class="eyebrow">Yaser Mohammed Shajalal — UI/UX designer</p>
+      <h1 class="hero-title" aria-label="Calm, clear interfaces.">
+        <span class="line">Calm, clear</span>
+        <span class="line"><em>interfaces.</em></span>
+      </h1>
+      <p class="hero-sub">
+        I turn messy problems into calm, clear interfaces. Drag the stickers and move your cursor. Everything here responds.
+      </p>
+
+      <div class="stickers" id="stickers"></div>
+
+      <a href="#work" class="scroll-hint" data-magnetic>Scroll to explore ↓</a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Research</span><i>✶</i><span>User flows</span><i>✶</i><span>Design systems</span><i>✶</i><span>Figma handoff</span><i>✶</i><span>UI/UX</span><i>✶</i>
+        <span>Research</span><i>✶</i><span>User flows</span><i>✶</i><span>Design systems</span><i>✶</i><span>Figma handoff</span><i>✶</i><span>UI/UX</span><i>✶</i>
+      </div>
+    </div>
+
+    <!-- WORK -->
+    <section class="work" id="work">
+      <header class="section-head">
+        <h2>Selected work</h2>
+        <p>Hover a card to see it breathe.</p>
+      </header>
+
+      <div class="cards">
+        <a class="card tilt" href="https://sapped33.web.app/" data-project="sapped" target="_blank" rel="noopener" style="--a:#ff8ad8;--b:#6b5cff">
+          <div class="card-visual">
+            <img class="fit" style="background: #151628" src="images/sapped.jpg" alt="Sapped project screenshot" loading="lazy" />
+            <span class="card-num">01</span>
+          </div>
+          <div class="card-body">
+            <h3>Sapped</h3>
+            <p>Sapped is a collective wellbeing experience that turns anonymous emotional check-ins into a shared visualisation of group wellbeing.</p>
+            <span class="tag">Web · Live site</span>
+          </div>
+        </a>
+
+        <a class="card tilt" href="https://www.figma.com/proto/BQLgw5bVy1Cn2xZRd826wp/FlowSpace.-Board?node-id=304-890&amp;p=f&amp;t=Rde42rI31rwvQWvv-0&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=304%3A599&amp;starting-point-node-id=304%3A600" data-project="flowspace" target="_blank" rel="noopener" style="--a:#f5e663;--b:#ff8ad8">
+          <div class="card-visual wide-shot">
+            <img class="fit" src="images/flowspace.jpg" alt="FLOWSPACE project picture" loading="lazy" />
+            <span class="card-num">02</span>
+          </div>
+          <div class="card-body">
+            <h3>FLOWSPACE</h3>
+            <p>Flowspace is a mobile app that helps students, freelancers, and remote workers find quiet, productive spaces to work or study in real time.</p>
+            <span class="tag">Figma · Prototype</span>
+          </div>
+        </a>
+
+        <a class="card tilt" href="https://iris-drill-75044280.figma.site/" data-project="oneschool" target="_blank" rel="noopener" style="--a:#9ad0ff;--b:#f5e663">
+          <div class="card-visual">
+            <img class="fit" style="background: #ff7a1a" src="images/oneschool.jpg" alt="Oneschool logo on orange" loading="lazy" />
+            <span class="card-num">03</span>
+          </div>
+          <div class="card-body">
+            <h3>Oneschool</h3>
+            <p>A simplified LMS concept designed to help students navigate online learning without unnecessary complexity or distractions.</p>
+            <span class="tag">Figma · Prototype</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- LAB -->
+    <section class="lab" id="lab">
+      <header class="section-head">
+        <h2>The lab</h2>
+        <p>Move your cursor across the canvas. Click to drop a wave.</p>
+      </header>
+      <div class="lab-stage">
+        <canvas id="labCanvas" aria-label="Interactive gradient wave canvas"></canvas>
+        <div class="lab-label">Wave / Gradient / Cursor</div>
+        <img class="egg" src="images/super.gif" alt="Secret" role="button" tabindex="0" />
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="polaroid-wrap">
+        <figure class="polaroid tilt-slow">
+          <img class="photo" src="images/yaser.jpg" alt="Yaser in a black and grey hoodie" />
+          <figcaption>Yaser</figcaption>
+        </figure>
+      </div>
+      <div class="about-copy">
+        <h2>About me</h2>
+        <p class="lead">
+          Hi, I'm Yaser, a UI/UX designer and student who turns messy problems into calm, clear interfaces.
+        </p>
+        <p>
+          I work across research, flows, design systems and Figma-ready handoff, so designs are easy for developers to build.
+        </p>
+        <h3 class="clients-title">Worked with</h3>
+        <div class="clients">
+          <figure class="client">
+            <img src="images/musemind.png" alt="Musemind logo" loading="lazy" />
+            <figcaption>Musemind</figcaption>
+          </figure>
+          <figure class="client">
+            <img src="images/muselinka.png" alt="Muselinka logo" loading="lazy" />
+            <figcaption>Muselinka</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <h2 class="contact-title">Let's build<br /><em>something</em> clear.</h2>
+      <a class="mail" href="mailto:yaserjalal79@gmail.com" data-magnetic>yaserjalal79@gmail.com</a>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/yaser-mohammed-shajalal-89a155309/" target="_blank" rel="noopener" data-magnetic>LinkedIn</a>
+      </div>
+      <p class="fine">© <span id="year"></span> Yaser Mohammed Shajalal</p>
+    </section>
+  </main>
+
+  <dialog class="project-dialog" id="projectDialog" aria-label="Project details"></dialog>
+
+  <dialog class="project-dialog egg-dialog" id="eggDialog" aria-label="A surprise">
+    <div class="pd-inner">
+      <button class="pd-close" type="button" aria-label="Close">×</button>
+      <p class="kicker">Secret found</p>
+      <h3>Congratulations, you have found me!</h3>
+      <p class="pd-text">I have a surprise for you. A special thanks, just for you.</p>
+      <video class="egg-frame" id="eggVideo" src="videos/thanks.mp4" controls playsinline preload="none"></video>
+    </div>
+  </dialog>
+
+  <dialog class="project-dialog" id="journeyDialog" aria-label="My journey">
+    <div class="pd-inner">
+      <button class="pd-close" type="button" aria-label="Close">×</button>
+      <p class="kicker">My journey</p>
+      <h3>Why I chose UI/UX</h3>
+      <p class="pd-text">
+        Since I was a child, I have always loved colorful things and art. My first dream was to work in game design.
+      </p>
+      <p class="pd-text">
+        Because of some religious considerations, I looked for a path that is harmless. UI/UX design lets me improve how things work and look, without characters involved.
+      </p>
+    </div>
+  </dialog>
+
+  <aside class="onboard" id="onboard" role="dialog" aria-label="Quick tour" hidden>
+    <p class="onboard-step" id="onboardStep">Step 1 of 4</p>
+    <h3 class="onboard-title" id="onboardTitle">My work</h3>
+    <p class="onboard-text" id="onboardText">Click any project card to open its details.</p>
+    <div class="onboard-actions">
+      <button type="button" class="onboard-skip" id="onboardSkip">Skip tour</button>
+      <button type="button" class="onboard-next" id="onboardNext">Next</button>
+    </div>
+  </aside>
+  <button class="ocean-toggle" type="button" aria-pressed="true">Ocean sound: on</button>
+  <button class="motion-toggle" type="button" aria-pressed="true" data-magnetic>Motion on</button>
+
+  <script src="script.js?v=61"></script>
+</body>
+</html>
