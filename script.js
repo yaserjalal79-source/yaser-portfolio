@@ -12,6 +12,7 @@ const motionOff = (() => {
   }
 })();
 const reduceMotion = motionOff;
+const mobileView = window.matchMedia("(max-width: 900px), (hover: none)").matches;
 document.documentElement.classList.toggle("motion-off", motionOff);
 
 // Always start at the top on refresh (the browser would otherwise restore the old position).
@@ -34,8 +35,8 @@ if (finePointer && cursor) {
   });
 
   const tick = () => {
-    cx += (x - cx) * 0.2;
-    cy += (y - cy) * 0.2;
+    cx += (x - cx) * 0.45;
+    cy += (y - cy) * 0.45;
     cursor.style.left = `${cx}px`;
     cursor.style.top = `${cy}px`;
     requestAnimationFrame(tick);
@@ -630,6 +631,17 @@ function runIntro() {
 
 runIntro();
 
+// ---------- Smooth scrolling (Lenis) ----------
+// Lenis smooths mouse-wheel and link scrolling. Touch keeps the phone's own scrolling.
+if (window.Lenis && !reduceMotion) {
+  const lenis = new Lenis({ duration: 0.8, smoothWheel: true, smoothTouch: false, anchors: true });
+  const raf = (time) => {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  };
+  requestAnimationFrame(raf);
+}
+
 // ---------- Scroll animations: progress, nav, parallax ----------
 const progressBar = $(".progress");
 const siteNav = $(".nav");
@@ -661,7 +673,8 @@ function onScrollFrame() {
       if (!img) return;
       const r = card.getBoundingClientRect();
       const offset = r.top + r.height / 2 - window.innerHeight / 2;
-      const drift = Math.max(-18, Math.min(18, -offset * 0.06));
+      // On phones and touch screens the image stays still, so scrolling is smooth.
+      const drift = mobileView ? 0 : Math.max(-18, Math.min(18, -offset * 0.06));
       img.style.setProperty("--drift", `${drift.toFixed(1)}px`);
     });
   }
